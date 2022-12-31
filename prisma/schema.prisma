@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Card {
+  id        Int      @id @default(autoincrement())
+  name      String
+  image_url String
+  desc     String
+  votesFor     vote[] @relation("votesFor")
+  votesAgainst vote[] @relation("votesAgainst")
+  
+
+
+
+}
+
+model vote {
+  id        Int      @id @default(autoincrement())
+  against   Card     @relation(name:"votesAgainst" ,fields: [againstId], references: [id])
+  againstId Int
+  for      Card     @relation(name:"votesFor" , fields: [forId], references: [id])
+  forId    Int
+
+  createdAt DateTime @default(now())
+
+  @@index([forId])
+  @@index([againstId])
+}
