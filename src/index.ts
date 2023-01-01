@@ -71,12 +71,12 @@ const fillDB = async () => {
   );
   const cardData = cards.data.data;
   //for 12000 times create a card in db
-  for (let i = 0; i < 12000; i++) {
+  for (let i = 0; i < 12447; i++) {
     const card = await prisma.card.create({
       data: {
         name: cardData[i].name,
         desc: cardData[i].desc,
-        image_url: cardData[i].card_images[0].image_url,
+        image_url: cardData[i].card_images[0].image_url_croppped,
       },
     });
   }
@@ -115,7 +115,7 @@ app.post("/vote", (req, res) => {
 
 app.get("/getCards", (req, res) => {
   const { name } = req.query;
-  getCard(Math.floor(Math.random() * 12000), Math.floor(Math.random() * 12000))
+  getCard(Math.floor(Math.random() * 12347), Math.floor(Math.random() * 12347))
     .then((cards) => {
       res.send({
         cards: cards.map((card) => {
